@@ -27,4 +27,8 @@ module.exports = function (eleventyConfig) {
  
     return content;
   });
+
+  eleventyConfig.addPassthroughCopy({
+    "./node_modules/alpinejs/dist/alpine.js": "./js/alpine.js",
+  });
 };
