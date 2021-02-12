@@ -1,0 +1,112 @@
+{% extends "_includes/default.njk" %}
+ 
+{% block title %}Questifier{% endblock %}
+ 
+{% block content %}
+<main class="mx-auto max-w-8xl bg-gray-200 h-screen">
+    <nav class="px-4 pt-4 bg-indigo-700 text-indigo-100">
+        <h1 class="text-2xl mb-2">Questifier</h1>
+        <ul>
+            <li class="inline-block"><span class="px-4 pt-2 pb-2 bg-gray-200 text-indigo-700 block">Quest settings</span></li>
+            <li class="inline-block"><a href="/stages" class="px-4 pt-2 pb-2 hover:bg-gray-200 hover:text-indigo-700 block">Stages</a></li>
+        </ul>
+    </nav>
+
+    <div
+        x-data="
+            {
+                isShowingName: false,
+                isShowingAskMsg: false,
+                isShowingFinishMsg: false,
+                isShowingNPCStart: false,
+                isShowingBlockStart: false,
+                isShowingRegionStart: false,
+                isShowingGUIItemDisplay: false,
+                isShowingGUIItemID: false,
+                questName: localStorage.getItem('questName'),
+                askMessage: localStorage.getItem('askMessage'),
+                finishMessage: localStorage.getItem('finishMessage'),
+                NPCGiverID: localStorage.getItem('NPCGiverID'),
+                GUIItemType: localStorage.getItem('GUIItemType')
+            }
+        "
+        x-init="
+            $watch('questName', (val) => localStorage.setItem('questName', val))
+            $watch('askMessage', (val) => localStorage.setItem('askMessage', val))
+            $watch('finishMessage', (val) => localStorage.setItem('finishMessage', val))
+            $watch('NPCGiverID', (val) => localStorage.setItem('NPCGiverID', val))
+            $watch('GUIItemType', (val) => localStorage.setItem('GUIItemType', val))
+        "
+        class="flex flex-row"
+    >
+        <section class="flex flex-col flex-1 p-4">
+            <ol class="list-decimal list-inside">
+                <li class="pb-3">
+                    <a href="#" @click="isShowingName=!isShowingName">Set Name</a><br/>
+                    <input x-show="isShowingName" x-model="questName" type="text" class="px-2" />
+                </li>
+                <li class="pb-3">
+                    <a href="#" @click="isShowingAskMsg=!isShowingAskMsg">Set Ask Message</a><br/>
+                    <textarea x-show="isShowingAskMsg" x-model="askMessage" cols="30" rows="5" class="px-2"></textarea>
+                </li>
+                <li class="pb-3">
+                    <a href="#" @click="isShowingFinishMsg=!isShowingFinishMsg">Set Finish Message</a><br/>
+                    <textarea x-show="isShowingFinishMsg" x-model="finishMessage" cols="30" rows="5" class="px-2"></textarea>
+                </li>
+                <li class="pb-3">
+                    <a href="#" @click="isShowingNPCStart=!isShowingNPCStart">Set NPC Start</a><br/>
+                    <input x-show="isShowingNPCStart" x-model="NPCGiverID" type="text" class="px-2" />
+                </li>
+                <li class="pb-3">
+                    <a href="#" @click="isShowingGUIItemDisplay=!isShowingGUIItemDisplay">Set GUI Item Display</a><br/>
+                    <ol x-show="isShowingGUIItemDisplay" class="list-decimal list-inside ml-4">
+                        <li class="pb-3">
+                            <a href="#" @click="isShowingGUIItemID=!isShowingGUIItemID">Set Item ID</a><br/>
+                            <input x-show="isShowingGUIItemID" x-model="GUIItemType" type="text" class="px-2" />
+                        </li>
+                    </ol>
+                </li>
+            </ol>
+        </section>
+
+
+        <section class="flex flex-1 p-4">
+            <div class="flex flex-col">
+                <ul>
+                    <li>
+                        <template x-if="questName">
+                            <div>name: <span x-text="questName"></span></div>
+                        </template>
+                    </li>
+                    <li>
+                        <template x-if="askMessage">
+                            <div>ask-message: <span x-text="askMessage"></span></div>
+                        </template>
+                    </li>
+                    <template x-if="finishMessage">
+                        <div>finish-message: <span x-text="finishMessage"></span></div>
+                    </template>
+                    <template x-if="NPCGiverID">
+                        <div>npc-giver-id: <span x-text="NPCGiverID"></span></div>
+                    </template>
+                    <template x-if="GUIItemType">
+                        <div>gui-display:</div>
+                    </template>
+                    <template x-if="GUIItemType">
+                        <div class="ml-3">==: org.bukkit.inventory.ItemStack</div>
+                    </template>
+                    <template x-if="GUIItemType">
+                        <div class="ml-3">v: 2586</div>
+                    </template>
+                    <template x-if="GUIItemType">
+                        <div class="ml-3">type: <span x-text="GUIItemType"></span></div>
+                    </template>
+                    </template>
+                </ul>
+            </div>
+
+        </section>
+    </div>
+
+</main>
+{% endblock %}
